@@ -12,6 +12,17 @@ import calendar
 # Load environment variables dari file .env
 load_dotenv()
 
+# deploy render
+gsa_json = os.getenv("GSA_JSON")
+if gsa_json and not os.path.exists("service-account-key.json"):
+    with open("service-account-key.json", "w") as f:
+        f.write(gsa_json)
+    try:
+        os.chmod("service-account-key.json", 0o600)
+    except Exception:
+        pass
+# end deploy render
+
 # Setup logging
 logging.basicConfig(
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
